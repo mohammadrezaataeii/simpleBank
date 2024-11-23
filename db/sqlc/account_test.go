@@ -11,7 +11,7 @@ import (
 	"github.com/simplebank/util"
 )
 
-func createRandomAccount(t *testing.T) Accounts {
+func createRandomAccount(t *testing.T) Account {
 	arg := CreateAccountParams{
 		Owner:    util.RandomOwner(),
 		Balance:  util.RandomMoney(),
