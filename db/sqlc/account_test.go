@@ -6,13 +6,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/simplebank/util"
 	"github.com/stretchr/testify/require"
+
+	"github.com/simplebank/util"
 )
 
-func createRandomAccount(t *testing.T) Accounts {
+func createRandomAccount(t *testing.T) Account {
 	arg := CreateAccountParams{
-		Owner:    util.RandomOwer(),
+		Owner:    util.RandomOwner(),
 		Balance:  util.RandomMoney(),
 		Currency: util.RandomCurrency(),
 	}
