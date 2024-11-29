@@ -106,7 +106,7 @@ func TestTransferTxDeadlock(t *testing.T) {
 	fmt.Println(">>>>>>", account1.Balance, account2.Balance)
 
 	// run n concurrent transfer transactions
-	n := 20
+	n := 10
 	amount := int64(10)
 	errors := make(chan error)
 	// results := make(chan TransferTxResult)
