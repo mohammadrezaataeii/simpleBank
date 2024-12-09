@@ -29,6 +29,9 @@ sqlc:
 test:
 	go test -v -cover ./...
 
+server:
+	go run main
+
 # Phony targets to prevent conflicts with file names
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc test
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test server
  
