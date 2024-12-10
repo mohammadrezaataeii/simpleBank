@@ -23,7 +23,7 @@ FOR NO KEY UPDATE;
 
 -- name: ListAccounts :many
 SELECT * FROM accounts
-ORDER BY id
+ORDER BY id DESC
 LIMIT $1
 OFFSET $2;
 
