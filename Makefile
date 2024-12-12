@@ -32,6 +32,9 @@ test:
 server:
 	go run main
 
+mock:
+	mockgen -package mockdb -destination db/mock/store.go  github.com/simplebank/db/sqlc Store
+
 # Phony targets to prevent conflicts with file names
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc test server
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test server mock
  
