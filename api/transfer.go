@@ -14,7 +14,7 @@ type transferRequest struct {
 	FromAccountID int64  `json:"from_account_id" binding:"required,min=1"`
 	ToAccountID   int64  `json:"to_account_id" binding:"required,min=1"`
 	Amount        int64  `json:"amount" binding:"required,gt=0"`
-	Currency      string `json:"currency" binding:"required,oneof=USD EUR CAD"`
+	Currency      string `json:"currency" binding:"required,currency"`
 }
 
 func (s *Server) createTransfer(ctx *gin.Context) {
@@ -33,12 +33,12 @@ func (s *Server) createTransfer(ctx *gin.Context) {
 		return
 	}
 
-	arg := db.CreateTransferParams{
+	arg := db.TransferTxParams{
 		FromAccountID: req.FromAccountID,
 		ToAccountID:   req.ToAccountID,
 		Amount:        req.Amount,
 	}
-	result, err := s.store.CreateTransfer(ctx, arg)
+	result, err := s.store.TransferTx(ctx, arg)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errResponse(err))
 		return
