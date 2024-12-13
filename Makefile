@@ -17,11 +17,21 @@ dropdb:
 	docker exec -it $(CONTAINER_NAME) dropdb simple_bank
 
 # DB migrate
+
+newmigrate:
+	migrate create -ext sql -dir db/migration -seq add_users
+
 migrateup:
 	migrate -path db/migration -database $(DB_URL) -verbose up
 
 migratedown:
 	migrate -path db/migration -database $(DB_URL) -verbose down
+
+migrateup1:
+	migrate -path db/migration -database $(DB_URL) -verbose up 1
+
+migratedown1:
+	migrate -path db/migration -database $(DB_URL) -verbose down 1
 
 sqlc:
 	sqlc generate
@@ -30,11 +40,11 @@ test:
 	go test -v -cover ./...
 
 server:
-	go run main
+	go run main.go
 
 mock:
 	mockgen -package mockdb -destination db/mock/store.go  github.com/simplebank/db/sqlc Store
 
 # Phony targets to prevent conflicts with file names
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc test server mock
+.PHONY: postgres createdb dropdb newmigrate migrateup migratedown migrateup1 migratedown1 sqlc test server mock
  
