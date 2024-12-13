@@ -20,6 +20,8 @@ func NewServer(store db.Store) *Server {
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		v.RegisterValidation("currency", validateCurrency)
 	}
+	// Users
+	router.POST("/users", server.createUser)
 
 	// Accounts
 	router.POST("/accounts", server.createAccount)
