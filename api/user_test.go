@@ -5,9 +5,6 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	mockdb "github.com/simplebank/db/mock"
-	db "github.com/simplebank/db/sqlc"
-	"github.com/simplebank/util"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -18,6 +15,10 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/lib/pq"
 	"github.com/stretchr/testify/require"
+
+	mockdb "github.com/simplebank/db/mock"
+	db "github.com/simplebank/db/sqlc"
+	"github.com/simplebank/util"
 )
 
 type eqCreateUserParamsMatcher struct {
@@ -178,7 +179,7 @@ func TestCreateUserAPI(t *testing.T) {
 			store := mockdb.NewMockStore(ctrl)
 			tc.buildStubs(store)
 
-			server := NewServer(store)
+			server := newTestServer(t, store)
 			recorder := httptest.NewRecorder()
 
 			// Marshal body data to JSON

@@ -5,16 +5,18 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"github.com/golang/mock/gomock"
-	mockdb "github.com/simplebank/db/mock"
-	db "github.com/simplebank/db/sqlc"
-	"github.com/simplebank/util"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/golang/mock/gomock"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+
+	mockdb "github.com/simplebank/db/mock"
+	db "github.com/simplebank/db/sqlc"
+	"github.com/simplebank/util"
 )
 
 func TestGetAccountAPI(t *testing.T) {
@@ -90,7 +92,7 @@ func TestGetAccountAPI(t *testing.T) {
 			// build stubs
 			tc.buildStubs(store)
 			// start test server and send request
-			server := NewServer(store)
+			server := newTestServer(t,store)
 			recorder := httptest.NewRecorder()
 			url := fmt.Sprintf("/accounts/%d", tc.accountID)
 			request, err := http.NewRequest(http.MethodGet, url, nil)
