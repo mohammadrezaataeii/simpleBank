@@ -19,7 +19,7 @@ dropdb:
 # DB migrate
 
 newmigrate:
-	migrate create -ext sql -dir db/migration -seq add_users
+	migrate create -ext sql -dir db/migration -seq add_sessions
 
 migrateup:
 	migrate -path db/migration -database $(DB_URL) -verbose up
