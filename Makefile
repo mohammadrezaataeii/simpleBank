@@ -36,6 +36,15 @@ migratedown1:
 sqlc:
 	sqlc generate
 
+db_docs:
+	dbdocs build doc/db.dbml
+
+dbdocsPass:
+	dbdocs password --project simple_bank
+
+db_schema:	
+	dbml2sql --postgres -o doc/schema.sql doc/db.dbml
+
 test:
 	go test -v -cover ./...
 
@@ -46,5 +55,5 @@ mock:
 	mockgen -package mockdb -destination db/mock/store.go  github.com/simplebank/db/sqlc Store
 
 # Phony targets to prevent conflicts with file names
-.PHONY: postgres createdb dropdb newmigrate migrateup migratedown migrateup1 migratedown1 sqlc test server mock
+.PHONY: postgres createdb dropdb newmigrate migrateup migratedown migrateup1 migratedown1 sqlc db_docs dbdocsPass db_schema test server mock
  
