@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package pb;
+
+// where the request response object are defined.
+import "rpc_create_user.proto";
+import "rpc_login_user.proto";
+
+option go_package = "github.com/simplebank/pb";
+
+service SimpleBank {
+  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
+  rpc LoginUser  (LoginUserRequest) returns (LoginUserResponse){}
+}
