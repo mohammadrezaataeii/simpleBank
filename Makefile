@@ -51,6 +51,9 @@ test:
 server:
 	go run main.go
 
+evans:
+	evans --host localhost --port 9090 -r repl
+
 mock:
 	mockgen -package mockdb -destination db/mock/store.go  github.com/simplebank/db/sqlc Store
 
@@ -58,7 +61,8 @@ proto:
 	rm -f pb/*.proto
 	protoc --proto_path=proto --go_out=pb --go_opt=paths=source_relative \
         --go-grpc_out=pb --go-grpc_opt=paths=source_relative \
+        --grpc-gateway_out=pb --grpc-gateway_opt paths=source_relative \
         proto/*.proto
 # Phony targets to prevent conflicts with file names
-.PHONY: postgres createdb dropdb newmigrate migrateup migratedown migrateup1 migratedown1 sqlc db_docs dbdocsPass db_schema test server mock proto
+.PHONY: postgres createdb dropdb newmigrate migrateup migratedown migrateup1 migratedown1 sqlc db_docs dbdocsPass db_schema test server mock proto evans
  
