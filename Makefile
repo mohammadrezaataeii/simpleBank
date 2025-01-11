@@ -65,6 +65,8 @@ proto:
         --grpc-gateway_out=pb --grpc-gateway_opt paths=source_relative \
         --openapiv2_out=doc/swagger --openapiv2_opt=allow_merge=true,merge_file_name=simple_bank \
         proto/*.proto
+	statik -src=./doc/swagger -dest=./doc
+
 # Phony targets to prevent conflicts with file names
 .PHONY: postgres createdb dropdb newmigrate migrateup migratedown migrateup1 migratedown1 sqlc db_docs dbdocsPass db_schema test server mock proto evans
  
