@@ -1,6 +1,10 @@
 package gapi
 
-import "google.golang.org/genproto/googleapis/rpc/errdetails"
+import (
+	"google.golang.org/genproto/googleapis/rpc/errdetails"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+)
 
 func fieldValidation(field string, err error) *errdetails.BadRequest_FieldViolation {
 	return &errdetails.BadRequest_FieldViolation{
@@ -10,5 +14,12 @@ func fieldValidation(field string, err error) *errdetails.BadRequest_FieldViolat
 }
 
 func invalidArgumentError(validations []*errdetails.BadRequest_FieldViolation) error {
-	badrequests := make([]*errdetails.BadRequest_FieldViolation, 0, len(validations))
+	badRequest := &errdetails.BadRequest{FieldViolations: validations}
+	statusInvalid := status.New(codes.InvalidArgument, "invalid parameters")
+
+	statusDetails, err := statusInvalid.WithDetails(badRequest)
+	if err != nil {
+		return statusDetails.Err()
+	}
+	return statusDetails.Err()
 }
