@@ -9,16 +9,16 @@ COPY . .
 # build the application
 # pass in the main entrypoint of the application
 RUN go build -o main main.go
-RUN apk add curl
-RUN curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.1/migrate.linux-amd64.tar.gz | tar xvz
+# RUN apk add curl
+# RUN curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.1/migrate.linux-amd64.tar.gz | tar xvz
 
 # Run stage
 FROM alpine:3.21
 WORKDIR /app
 # copy the binary from the builder stage to the working directory
 COPY --from=builder /app/main .
-COPY --from=builder /app/migrate.linux-amd64 ./migrate
-COPY  db/migration ./migration
+#COPY --from=builder /app/migrate.linux-amd64 ./migrate
+COPY  db/migration ./db/migration
 COPY start.sh .
 COPY wait-for.sh .
 COPY app.env .
